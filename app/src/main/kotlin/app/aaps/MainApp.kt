@@ -122,7 +122,7 @@ class MainApp : DaggerApplication() {
         // Configure LeakCanary with Firebase reporting
         // Memory leaks will be uploaded to Firebase Crashlytics via FabricPrivacy.logException
         configureLeakCanary(
-            isEnabled = !config.disableLeakCanary(),
+            isEnabled = false,
             fabricPrivacy = fabricPrivacy
         )
 
