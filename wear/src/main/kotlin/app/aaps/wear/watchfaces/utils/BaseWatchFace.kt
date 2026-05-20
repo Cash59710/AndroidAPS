@@ -172,6 +172,8 @@ abstract class BaseWatchFace : WatchFace() {
 
     private var mLastSvg = ""
     private var mLastDirection = ""
+    private var mLastCwfName = ""
+    private var mLastCwfVersion = ""
 
     override fun onCreate() {
         // Not derived from DaggerService, do injection here
@@ -714,11 +716,21 @@ abstract class BaseWatchFace : WatchFace() {
     }
 
     private fun needUpdate(): Boolean {
-        if (mLastSvg == singleBg[0].sgvString && mLastDirection == singleBg[0].sgvString) {
+        val cwf = complicationData.customWatchface
+        val cwfName = cwf?.metadata?.get(app.aaps.core.interfaces.rx.weardata.CwfMetadataKey.CWF_NAME) ?: ""
+        val cwfVersion = cwf?.metadata?.get(app.aaps.core.interfaces.rx.weardata.CwfMetadataKey.CWF_AUTHOR_VERSION) ?: ""
+
+        if (mLastSvg == singleBg[0].sgvString &&
+            mLastDirection == singleBg[0].slopeArrow &&
+            mLastCwfName == cwfName &&
+            mLastCwfVersion == cwfVersion
+        ) {
             return false
         }
         mLastSvg = singleBg[0].sgvString
-        mLastDirection = singleBg[0].sgvString
+        mLastDirection = singleBg[0].slopeArrow
+        mLastCwfName = cwfName
+        mLastCwfVersion = cwfVersion
         return true
     }
 

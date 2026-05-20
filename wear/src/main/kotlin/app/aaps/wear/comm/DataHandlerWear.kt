@@ -293,6 +293,7 @@ class DataHandlerWear @Inject constructor(
             .observeOn(aapsSchedulers.io)
             .subscribe {
                 aapsLogger.debug(LTag.WEAR, "Custom Watchface received from ${it.sourceNodeId}")
+                app.aaps.core.ui.toast.ToastUtils.showToastInUiThread(context, "AAPS: Design reçu !")
                 dataStoreScope.launch {
                     complicationDataRepository.storeCustomWatchface(it.customWatchfaceData)
                     complicationDataRepository.getSimplifiedCustomWatchface()?.let { cwf ->
