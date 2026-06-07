@@ -138,6 +138,21 @@ android {
 
     useLibrary("org.apache.http.legacy")
 
+    buildTypes {
+        named("release") {
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("${rootDir}/keystore/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     //Deleting it causes a binding error
     buildFeatures {
         dataBinding = true

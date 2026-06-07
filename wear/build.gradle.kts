@@ -54,6 +54,19 @@ android {
             // instrumentation and that causes online (JavaAgent) instrumentation
             // to fail in this project.
             enableAndroidTestCoverage = false
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        release {
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("${rootDir}/keystore/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
         }
     }
 
