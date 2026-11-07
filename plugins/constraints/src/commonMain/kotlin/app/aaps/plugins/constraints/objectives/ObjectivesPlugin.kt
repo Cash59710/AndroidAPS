@@ -65,7 +65,16 @@ class ObjectivesPlugin(
     ownPreferences = ObjectivesBooleanComposedKey.entries + ObjectivesLongComposedKey.entries,
     aapsLogger, rh, preferences, notificationManager
 ), PluginConstraints, Objectives {
-
+    init {
+        for (objective in objectives) {
+            if (objective.startedOn == 0L) {
+                objective.startedOn = kotlin.time.Clock.System.now().toEpochMilliseconds() - 86400000L
+            }
+            if (objective.accomplishedOn == 0L) {
+                objective.accomplishedOn = kotlin.time.Clock.System.now().toEpochMilliseconds() - 1000L
+            }
+        }
+    }
     fun reset() {
         for (objective in objectives) {
             objective.startedOn = 0
